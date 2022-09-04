@@ -18,7 +18,7 @@ class LoginWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "Login App", 
+                "Boton de pánico", 
                 style: TextStyle(
                   color: Colors.lightGreen,
                   fontSize: 40,
