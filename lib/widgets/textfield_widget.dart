@@ -12,11 +12,18 @@ class TextFieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
+        cursorColor: Colors.black,
         controller: controllerText,
         obscureText: obscure,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: label
+          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(          
+            borderSide: BorderSide(color: Color.fromRGBO(255, 192, 0, 10))
+          ),
+          labelText: label,
+          labelStyle: const TextStyle(
+            color: Colors.black
+          ),
         ),
       ),
     );
