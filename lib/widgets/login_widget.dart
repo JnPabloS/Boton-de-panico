@@ -1,7 +1,7 @@
-import 'package:boton_panico/widgets/buttonw_widget.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:boton_panico/widgets/textField_widget.dart';
 import 'package:flutter/material.dart';
+import '../services/ingreso_services.dart';
 
 class LoginWidget extends StatelessWidget {
   LoginWidget({super.key});
@@ -12,6 +12,9 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final ingresoServices = IngresoServices();
+
     return SafeArea(
       child: SingleChildScrollView(
         child: SizedBox(
@@ -40,7 +43,7 @@ class LoginWidget extends StatelessWidget {
               const SizedBoxW(heightSized: 40),
 
               TextFieldWidget(
-                label: "Correo", 
+                label: "Usuario", 
                 controllerText: userController
               ),
 
@@ -52,7 +55,28 @@ class LoginWidget extends StatelessWidget {
               
               const SizedBoxW(heightSized: 40),
 
-              const ButtonW(labelButton: "Iniciar Sesión", dependencia: 'login'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                child: SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromRGBO(255, 192, 0, 10),
+                    ),
+                    onPressed: () {
+                      ingresoServices.login(userController.text, passController.text);
+                    }, 
+                    child: const Text(
+                      "Iniciar sesión",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +84,7 @@ class LoginWidget extends StatelessWidget {
                   const Text("¿No tienes cuenta?"),
                   TextButton(
                     onPressed: () {
-                      print("object");
+                      Navigator.pushNamed(context, "register");
                     }, 
                     child: const Text(
                       "Regístrate",

@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText});
+  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText, this.isEmail = false});
 
   final String label;
   final bool obscure;
   final TextEditingController controllerText;
+  final bool isEmail;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+
+    return Padding(  
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
-        cursorColor: Colors.black,
+        keyboardType: _typeField(),
+        cursorColor: Colors.black45,
         controller: controllerText,
         obscureText: obscure,
         decoration: InputDecoration(
@@ -22,10 +25,16 @@ class TextFieldWidget extends StatelessWidget {
           ),
           labelText: label,
           labelStyle: const TextStyle(
-            color: Colors.black
+            color: Colors.black26,
           ),
         ),
       ),
     );
   }
+
+   _typeField() {
+    if (isEmail) {
+      return TextInputType.emailAddress;
+    }
+   }
 }
