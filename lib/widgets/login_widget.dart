@@ -22,13 +22,13 @@ class LoginWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               
-              const SizedBoxW(heightSized: 100),
+              const SizedBoxWidget(heightSized: 100),
 
               const Image(
                 image: AssetImage("assets/logo.png"),
               ),
 
-              const SizedBoxW(heightSized: 15),
+              const SizedBoxWidget(heightSized: 15),
 
               const Text(
                 "Botón de pánico", 
@@ -40,7 +40,7 @@ class LoginWidget extends StatelessWidget {
                 ),
               ),
               
-              const SizedBoxW(heightSized: 40),
+              const SizedBoxWidget(heightSized: 40),
 
               TextFieldWidget(
                 label: "Usuario", 
@@ -53,7 +53,7 @@ class LoginWidget extends StatelessWidget {
                 obscure: true,
               ),
               
-              const SizedBoxW(heightSized: 40),
+              const SizedBoxWidget(heightSized: 40),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),

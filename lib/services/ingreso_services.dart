@@ -51,7 +51,7 @@ class IngresoServices {
     }
   }
 
-    Future register(String user, String email, String password) async {
+    Future<dynamic> register(String user, String email, String password) async {
       var headers = {
         'Content-Type': 'application/json'
       };
@@ -67,15 +67,6 @@ class IngresoServices {
 
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
-        Fluttertoast.showToast(
-          msg: "Ingreso exitoso",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black87,
-          textColor: Colors.white,
-          fontSize: 16.0
-        );
       }
       else {
         print(response.reasonPhrase);

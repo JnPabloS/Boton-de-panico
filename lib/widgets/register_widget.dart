@@ -34,7 +34,7 @@ class RegisterWidget extends StatelessWidget {
                 ),
               ),
 
-              const SizedBoxW(heightSized: 40),
+              const SizedBoxWidget(heightSized: 40),
 
               TextFieldWidget(label: "Usuario",              controllerText: userController),
               TextFieldWidget(label: "Correo" ,              controllerText: emailController, isEmail: true,),
@@ -54,8 +54,8 @@ class RegisterWidget extends StatelessWidget {
                       if (_validatePassword(passController.text, repPassController.text)) {
                         ingresoServices.register(
                         userController.text, 
-                        passController.text, 
-                        emailController.text);
+                        emailController.text,
+                        passController.text);
                       } else {
                         Fluttertoast.showToast(
                           msg: "Las constraseñas no coinciden",

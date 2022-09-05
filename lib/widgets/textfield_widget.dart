@@ -14,7 +14,7 @@ class TextFieldWidget extends StatelessWidget {
     return Padding(  
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
-        keyboardType: _typeField(),
+        keyboardType: isEmail ? TextInputType.emailAddress : null,
         cursorColor: Colors.black45,
         controller: controllerText,
         obscureText: obscure,
@@ -31,10 +31,4 @@ class TextFieldWidget extends StatelessWidget {
       ),
     );
   }
-
-   _typeField() {
-    if (isEmail) {
-      return TextInputType.emailAddress;
-    }
-   }
 }
