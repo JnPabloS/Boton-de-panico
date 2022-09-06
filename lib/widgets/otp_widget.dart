@@ -159,7 +159,10 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     onCompleted: (v) {
                       formKey.currentState!.validate();
                       // conditions for validating
-                      ingresoServices.otp(currentText, "$widget.username");
+                      debugPrint(currentText);
+                      debugPrint("${widget.username}");
+
+                      ingresoServices.otp(currentText, "${widget.username}");
 
                       // if (currentText.length != 6) {
                       //   errorController!.add(ErrorAnimationType
