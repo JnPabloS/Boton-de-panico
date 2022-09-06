@@ -1,4 +1,5 @@
 import 'package:boton_panico/pages/login_page.dart';
+import 'package:boton_panico/pages/otp_page.dart';
 import 'package:boton_panico/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "login"    : (context) => const LoginPage(),
         "register" : (context) => const RegisterPage(),
+        "otp" :(context) => const OTPPage()
       },
     );
   }

@@ -51,7 +51,7 @@ class IngresoServices {
     }
   }
 
-    Future<dynamic> register(String user, String email, String password) async {
+    Future register(String user, String email, String password) async {
       var headers = {
         'Content-Type': 'application/json'
       };
@@ -62,6 +62,23 @@ class IngresoServices {
         "email": email
       });
       request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+    }
+
+    Future otp(String code, String user) async {
+      var request = http.MultipartRequest('POST', Uri.parse('$ip/reto/usuarios/registro/confirmar/$user'));
+      request.fields.addAll({
+        'codigo': code
+      });
+
 
       http.StreamedResponse response = await request.send();
 

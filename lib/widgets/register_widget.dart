@@ -51,11 +51,22 @@ class RegisterWidget extends StatelessWidget {
                       primary: const Color.fromRGBO(255, 192, 0, 10),
                     ),
                     onPressed: () {
+
                       if (_validatePassword(passController.text, repPassController.text)) {
                         ingresoServices.register(
                         userController.text, 
                         emailController.text,
                         passController.text);
+                        Navigator.pushNamed(
+                          context, 
+                          "otp",
+                          arguments: [
+                            emailController.text,
+                            userController.text
+                          ]
+                        );
+                        
+
                       } else {
                         Fluttertoast.showToast(
                           msg: "Las constraseñas no coinciden",
