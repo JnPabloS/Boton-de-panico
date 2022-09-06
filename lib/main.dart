@@ -1,3 +1,4 @@
+import 'package:boton_panico/pages/button_start_page.dart';
 import 'package:boton_panico/pages/login_page.dart';
 import 'package:boton_panico/pages/register_page.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Roboto',
       ),
-      initialRoute: "login",
+      initialRoute: "buttonStart",
       routes: {
-        "login"    : (context) => const LoginPage(),
-        "register" : (context) => const RegisterPage(),
+        "login"       : (context) => const LoginPage(),
+        "register"    : (context) => const RegisterPage(),
+        "buttonStart" : (context) => const ButtonStartPage(),
       },
     );
   }
