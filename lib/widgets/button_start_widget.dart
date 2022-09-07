@@ -1,3 +1,5 @@
+//import 'package:boton_panico/pages/button_start_page.dart';
+import 'package:boton_panico/pages/select_emergency_page.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +9,7 @@ class ButtonStartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,7 +18,12 @@ class ButtonStartWidget extends StatelessWidget {
             height:290,width: 290,
             child: ElevatedButton(
               onPressed: () {
-                print("EMERGENCIA");
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+                  builder: (BuildContext context){
+                    return const SelectEmergencyPage();
+                    }
+                 ),  (Route<dynamic> route) => false,
+                );
               },
               style: ElevatedButton.styleFrom(
                 //primary: Colors.red,

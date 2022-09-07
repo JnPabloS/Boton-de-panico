@@ -1,5 +1,4 @@
 import 'package:boton_panico/widgets/button_start_widget.dart';
-import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
 
 class ButtonStartPage extends StatelessWidget {
@@ -8,7 +7,9 @@ class ButtonStartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           shadowColor: const Color.fromRGBO(255, 192, 0, 10),
           title: const Text(
