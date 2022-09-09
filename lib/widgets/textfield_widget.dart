@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText, this.isEmail = false});
+  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText, this.isEmail = false, this.isPhone = false});
 
   final String label;
   final bool obscure;
   final TextEditingController controllerText;
   final bool isEmail;
+  final bool isPhone;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class TextFieldWidget extends StatelessWidget {
     return Padding(  
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
-        keyboardType: isEmail ? TextInputType.emailAddress : null,
+        keyboardType: _validateType(isEmail, isPhone)    ,   //_validateType(isEmail),
         cursorColor: Colors.black45,
         controller: controllerText,
         obscureText: obscure,
@@ -30,5 +31,15 @@ class TextFieldWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+_validateType(bool isEmail, bool isPhone){
+  if (isEmail){
+    return TextInputType.emailAddress;
+  } else if (isPhone) {
+    return TextInputType.phone;
+  } else {
+    return null;
   }
 }

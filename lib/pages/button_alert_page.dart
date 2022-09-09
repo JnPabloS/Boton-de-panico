@@ -1,9 +1,10 @@
-import 'package:boton_panico/pages/login_page.dart';
-import 'package:boton_panico/widgets/button_start_widget.dart';
+import 'package:boton_panico/widgets/button_alert_widget.dart';
 import 'package:flutter/material.dart';
 
-class ButtonStartPage extends StatelessWidget {
-  const ButtonStartPage({super.key});
+import 'login_page.dart';
+
+class ButtonAlertPage extends StatelessWidget {
+  const ButtonAlertPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,12 @@ class ButtonStartPage extends StatelessWidget {
                 return [
                   const PopupMenuItem<int>(
                       value: 0,
-                      child: Text("Ver perfil"),
+                      child: Text("Editar perfil"),
                   ),
 
                   const PopupMenuItem<int>(
                       value: 1,
-                      child: Text("Configuración"),
+                      child: Text("Añadir contactos"),
                   ),
 
                   const PopupMenuItem<int>(
@@ -43,11 +44,11 @@ class ButtonStartPage extends StatelessWidget {
               
               onSelected:(value){
                 if(value == 0){
-                  Navigator.pushNamed(context, "perfil");
+                    print("My account menu is selected.");
                 }else if(value == 1){
-                  Navigator.pushNamed(context, "config");
+                  print("Settings menu is selected.");
                 }else if(value == 2){
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
                     builder: (BuildContext context){
                       return const LoginPage();
                       },
@@ -61,7 +62,7 @@ class ButtonStartPage extends StatelessWidget {
             ) ,
           ]
         ),
-        body: const ButtonStartWidget(),
+        body: const ButtonAlertWidget(),
     );
   }
 }

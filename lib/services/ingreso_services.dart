@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
+
+
+
 class IngresoServices {
 
   final ip = "http://sistemic.udea.edu.co:4000";
-
-  Future login(String user, String password) async {
+  
+  Future<bool> login(String user, String password) async {
+    
     var headers = {
       'Authorization': 'Basic Zmx1dHRlci1yZXRvOnVkZWE=',
       'Content-Type': 'application/x-www-form-urlencoded'
     };
     var request = http.Request('POST', Uri.parse('$ip/reto/autenticacion/oauth/token'));
     request.bodyFields = {
-      'username': user,
-      'password': password,
+      'username'  : user,
+      'password'  : password,
       'grant_type': 'password'
     };
     request.headers.addAll(headers);
@@ -24,9 +28,11 @@ class IngresoServices {
       http.StreamedResponse response = await request.send();
         if (response.statusCode == 200) {
           print(await response.stream.bytesToString());
+          return true;
        }
        else {
         print(response.reasonPhrase);
+        
         Fluttertoast.showToast(
           msg: "Credenciales incorrectas",
           toastLength: Toast.LENGTH_SHORT,
@@ -36,6 +42,7 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
         );
+        return false;
       }
     } catch (e) {
       print(e);
@@ -48,6 +55,7 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
       );
+      return false;
     }
   }
 
@@ -66,6 +74,7 @@ class IngresoServices {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
+
         print(await response.stream.bytesToString());
       }
       else {
@@ -89,4 +98,85 @@ class IngresoServices {
         print(response.reasonPhrase);
       }
     }
+
+    Future addContacts(String name, String lastName, String email, String cell, String user) async {
+      var headers = {
+        'Content-Type'  : 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('$ip/reto/usuarios/contactos/crear/$user'));
+      request.body = json.encode({
+        "name"     : name,
+        "lastName" : lastName,
+        "email"    : email,
+        "cellPhone": cell
+      });
+      request.headers.addAll(headers);
+      try {
+      http.StreamedResponse response = await request.send();
+        if (response.statusCode == 200) {
+          print(await response.stream.bytesToString());
+          print("INSCRITOOOOO");
+        }
+
+       else {
+        print(response.reasonPhrase);
+        
+        Fluttertoast.showToast(
+          msg: "Credenciales incorrectas",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+          msg: "Problemas con el servidor",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      return false;
+    }
+  }
+
+  Future seeProfile() async {
+    var request = http.Request('GET', Uri.parse('$ip/reto/usuarios/usuarios/encontrar/julianoo'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      Fluttertoast.showToast(
+          msg: "ENTRE",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+    else {
+      print(response.reasonPhrase);
+      Fluttertoast.showToast(
+          msg: "NADA",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+  }
+
+
 }

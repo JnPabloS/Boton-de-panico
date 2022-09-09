@@ -1,6 +1,11 @@
+import 'package:boton_panico/pages/add_contacts_page.dart';
+import 'package:boton_panico/pages/button_alert_page.dart';
 import 'package:boton_panico/pages/button_start_page.dart';
+import 'package:boton_panico/pages/configuration_page.dart';
+import 'package:boton_panico/pages/edit_profile_page.dart';
 import 'package:boton_panico/pages/login_page.dart';
 import 'package:boton_panico/pages/otp_page.dart';
+import 'package:boton_panico/pages/perfil_page.dart';
 import 'package:boton_panico/pages/register_page.dart';
 import 'package:boton_panico/pages/select_emergency_page.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +23,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Roboto',
       ),
-      initialRoute: "login",
+      initialRoute: "buttonStart",
       routes: {
         "login"       : (context) =>  const LoginPage(),
         "register"    : (context) =>  const RegisterPage(),
         "buttonStart" : (context) =>  const ButtonStartPage(),
         "buttonSelect": (context) =>  const SelectEmergencyPage(),
-        "otp" :(context) => const OTPPage()
+        "buttonAlert" : (context) =>  const ButtonAlertPage(),
+        "addContacts" : (context) => const AddContactsPage(),
+        "perfil"      : (context) => const PerfilPage(),
+        "config"      : (context) => const ConfigurationPage(),
+        "editProfile" : (context) => const EditProfilePage(),
+        "otp"         : (context) => const OTPPage()
       },
     );
   }

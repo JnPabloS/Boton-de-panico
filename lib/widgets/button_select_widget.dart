@@ -1,31 +1,50 @@
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
 
+
+// class SizeConfig {
+//  static late MediaQueryData _mediaQueryData;
+//  static late double screenWidth;
+//  static late double screenHeight ;
+//  static late double blockSizeHorizontal;
+//  static late double blockSizeVertical;
+ 
+//  void init(BuildContext context) {
+//   _mediaQueryData = MediaQuery.of(context);
+//   screenWidth = _mediaQueryData.size.width;
+//   screenHeight = _mediaQueryData.size.height;
+//   blockSizeHorizontal = screenWidth / 100;
+//   blockSizeVertical = screenHeight / 100;
+//  }
+// }
+
 class ButtonSelectWidget extends StatelessWidget {
   const ButtonSelectWidget({super.key, required this.tipo});
-
+  
   final String tipo;
   
   @override
   Widget build(BuildContext context) {
-
+  
     final String imagen      = _imagen(tipo);
     final String labelButton = _label(tipo);
 
     return Column(
+      
       children: [
         SizedBox(
-
-          height:120,width: 120,
+    
+          height : 120,
+          width  : 120,
           
           child: ElevatedButton(
             onPressed: () {
-
-              Navigator.pushNamed(context, "buttonStart");
-
+              print(tipo);
+              Navigator.pushNamed(context, "buttonAlert", arguments: {'tipo' : tipo});
+    
             },
-
-            style: ElevatedButton.styleFrom(
+    
+            style: ElevatedButton.styleFrom( 
                     primary: _color(tipo),
                     elevation: 10,
                     shape: RoundedRectangleBorder(
@@ -33,12 +52,11 @@ class ButtonSelectWidget extends StatelessWidget {
                       ),
                     padding: const EdgeInsets.all(0.0),             
                   ), 
-
+    
             child: Image.asset(
               "assets/$imagen.png",
-              width: 70,
-              height: 70,
-
+              height : 70,
+              width  : 70,
             ),
           ),
         ),
@@ -47,6 +65,7 @@ class ButtonSelectWidget extends StatelessWidget {
         
         Text(
           labelButton,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black45
           ),
@@ -55,6 +74,7 @@ class ButtonSelectWidget extends StatelessWidget {
     );
   }
 }
+
 
 _color(String colorButton) {
   switch(colorButton) { 
