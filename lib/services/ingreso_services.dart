@@ -33,12 +33,9 @@ class IngresoServices {
       final Map<String, dynamic> decodeData = json.decode(await response.stream.bytesToString());
 
       if (response.statusCode == 200) {
-        //print(await response.stream.bytesToString());
-        prefs.token = decodeData["access_token"];
-        prefs.username = user;
-
-        print(prefs.token);
-        print(prefs.username);
+        prefs.token        = decodeData["access_token"];
+        prefs.refreshToken = decodeData["refresh_token"];
+        prefs.username     = user;
         
         return true;
       }
@@ -113,9 +110,10 @@ class IngresoServices {
 
     Future addContacts(String name, String lastName, String email, String cell, String user, String token) async {
       var headers = {
-        'Authorization': 'Bearer $token',
+        'Authorization' : 'Bearer $token',
         'Content-Type'  : 'application/json'
       };
+
       var request = http.Request('POST', Uri.parse('$ip/reto/usuarios/contactos/crear/$user'));
       request.body = json.encode({
         "name"     : name,
@@ -126,16 +124,24 @@ class IngresoServices {
       request.headers.addAll(headers);
       try {
       http.StreamedResponse response = await request.send();
-        if (response.statusCode == 200) {
+      print("${response.statusCode}");
+        if (response.statusCode == 201) {
           print(await response.stream.bytesToString());
-          print("INSCRITOOOOO");
+          Fluttertoast.showToast(
+            msg: "Contacto creado correctamente",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black87,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
         }
 
        else {
-        print(response.reasonPhrase);
-        
+        print(response.reasonPhrase);        
         Fluttertoast.showToast(
-          msg: "Credenciales incorrectas",
+          msg: "No fue posible crear el contacto",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -143,7 +149,6 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
         );
-        return false;
       }
     } catch (e) {
       print(e);
@@ -156,7 +161,7 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
       );
-      return false;
+      //return false;
     }
   }
 
@@ -174,9 +179,10 @@ class IngresoServices {
       http.StreamedResponse response = await request.send();
       final Map<String, dynamic> decodeData = await json.decode(await response.stream.bytesToString());
 
-
       if (response.statusCode == 200) {
-        //print(await response.stream.bytesToString());
+        prefs.name     = decodeData['name'];
+        prefs.lastName = decodeData['lastName'];
+
         return decodeData;
       }
       else {
@@ -213,12 +219,54 @@ class IngresoServices {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print("ESTEEE");
       print(await response.stream.bytesToString());
     }
     else {
       print(response.reasonPhrase);
     }
+  }
 
+  Future editProfile(String user, String name, String lastName, String token) async { 
+ 
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type' : 'application/json',
+      'Cookie': 'color=rojo'
+    };
+
+    var request = http.Request('PUT', Uri.parse('$ip/reto/usuarios/usuarios/editar/$user'));
+    request.body = json.encode({
+      "name"     : name,
+      "lastName" : lastName
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      Fluttertoast.showToast(
+          msg: "Cambios realizados correctamente",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+    }
+    else {
+      print(response.reasonPhrase);
+      Fluttertoast.showToast(
+          msg: "No fue posible realizar los cambios",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+    }
   }
 }

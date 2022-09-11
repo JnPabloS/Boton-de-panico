@@ -16,7 +16,7 @@ class AddContactsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final ingresoServices = IngresoServices();
-    final prefs = PreferenciasUsuario();
+    final prefs           = PreferenciasUsuario();
 
     return SingleChildScrollView(
       child: Column(
@@ -48,7 +48,8 @@ class AddContactsWidget extends StatelessWidget {
             child: ElevatedButton(
               
               onPressed: ()  {
-                ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.token);
+                ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.refreshToken);
+                //_clearAll(nameController, lastNameController, emailController, cellController);
               }, 
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromRGBO(255, 192, 0, 10),
@@ -65,5 +66,12 @@ class AddContactsWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _clearAll(TextEditingController nameController,TextEditingController lastNameController,TextEditingController emailController,TextEditingController cellController) {
+    nameController.text = "";
+    lastNameController.text = "";
+    emailController.text = "";
+    cellController.text = "";
   }
 }

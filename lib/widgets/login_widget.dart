@@ -71,11 +71,12 @@ class LoginWidget extends StatelessWidget {
 
                       if (userController.text != "" && passController.text != "") {
                         ingresoServices.verifyUser(userController.text);
-                      } 
+                      }
 
                       bool confirmLogin = await ingresoServices.login(userController.text, passController.text);
 
                       if (confirmLogin) {
+                        ingresoServices.seeProfile(prefs.token, prefs.username);
                         //Navigator.popAndPushNamed(context, 'buttonStart');
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
                           builder: (BuildContext context){

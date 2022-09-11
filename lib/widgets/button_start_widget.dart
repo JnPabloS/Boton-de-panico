@@ -1,5 +1,6 @@
 //import 'package:boton_panico/pages/button_start_page.dart';
-import 'package:boton_panico/pages/select_emergency_page.dart';
+// import 'package:boton_panico/pages/select_emergency_page.dart';
+// import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +11,13 @@ class ButtonStartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
+      height: MediaQuery.of(context).size.height,
       color: Colors.white,
       alignment: Alignment.center,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
