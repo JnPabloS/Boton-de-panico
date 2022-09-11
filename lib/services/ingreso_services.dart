@@ -9,7 +9,7 @@ class IngresoServices {
   final ip = "http://sistemic.udea.edu.co:4000";
   final prefs = PreferenciasUsuario();
 
-  Future<bool> login(String user, String password) async {
+  Future<Map<String, dynamic>> login(String user, String password) async {
     
     var headers = {
       'Authorization': 'Basic Zmx1dHRlci1yZXRvOnVkZWE=',
@@ -27,48 +27,18 @@ class IngresoServices {
 
     request.headers.addAll(headers);
 
-    try {
+    http.StreamedResponse response = await request.send();
+    final Map<String, dynamic> decodeData = json.decode(await response.stream.bytesToString());
 
-      http.StreamedResponse response = await request.send();
-      final Map<String, dynamic> decodeData = json.decode(await response.stream.bytesToString());
-
-      if (response.statusCode == 200) {
-        prefs.token        = decodeData["access_token"];
-        prefs.refreshToken = decodeData["refresh_token"];
-        prefs.username     = user;
-        
-        return true;
-      }
-      else {
-        print(response.reasonPhrase);
-        
-        Fluttertoast.showToast(
-          msg: "Credenciales incorrectas",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black87,
-          textColor: Colors.white,
-          fontSize: 16.0
-        );
-        return false;
-      }
-    } catch (e) {
-      print("ERROR: $e");
-      Fluttertoast.showToast(
-          msg: "Problemas con el servidor",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black87,
-          textColor: Colors.white,
-          fontSize: 16.0
-      );
-      return false;
+    if (response.statusCode == 200) {
+      prefs.token = decodeData["access_token"];
+      prefs.refreshToken = decodeData["refresh_token"];
+      prefs.username = user;
     }
+    return decodeData;
   }
 
-    Future register(String user, String email, String password) async {
+    Future<http.StreamedResponse> register(String user, String email, String password) async {
       var headers = {
         'Content-Type': 'application/json'
       };
@@ -81,31 +51,29 @@ class IngresoServices {
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-
-        print(await response.stream.bytesToString());
-      }
-      else {
-        print(response.reasonPhrase);
-      }
+      
+      return response;
     }
 
-    Future otp(String code, String user) async {
+    Future<String> otp(String code, String user) async {
       var request = http.MultipartRequest('POST', Uri.parse('$ip/reto/usuarios/registro/confirmar/$user'));
       request.fields.addAll({
         'codigo': code
       });
 
-
       http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
+      print(response.statusCode);
+
+      if (response.statusCode == 201) {
         print(await response.stream.bytesToString());
-      }
-      else {
+        return "confirm";
+      } else if (response.statusCode == 406) {
+        return "badCode";
+      } else {
         print(response.reasonPhrase);
       }
+      return "error";
     }
 
     Future addContacts(String name, String lastName, String email, String cell, String user, String token) async {
@@ -205,8 +173,9 @@ class IngresoServices {
     }
   }
 
-  Future verifyUser(String user) async {
+  Future<int> verifyUser(String user) async {
     var headers = {
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqdWxpYW5vIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6ImJiNDExMjM3LWE2YmUtNGJiNS1iMjE0LWNkMmJmMzhmZjEwZSIsImV4cCI6MTY2NTUyMDk3NCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImJjMjE3N2RiLTgyYTMtNDY3OS1hODZhLWFiYjM4ODk1MDgwMyIsImNsaWVudF9pZCI6ImZsdXR0ZXItcmV0byJ9.4Hr-8oYGGRz4qjtmmgR1Yn6SzwAkbr8TugPwjMFOeuw',
       'Cookie': 'color=rojo'
     };
     var request = http.MultipartRequest('GET', Uri.parse('$ip/reto/usuarios/usuarios/preguntar/usuarioExiste'));
@@ -219,11 +188,16 @@ class IngresoServices {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      if (await response.stream.bytesToString() == "true") {
+        return 1;
+      } else {
+        return 2;
+      }
     }
     else {
       print(response.reasonPhrase);
     }
+    return 3;
   }
 
   Future editProfile(String user, String name, String lastName, String token) async { 
@@ -243,7 +217,7 @@ class IngresoServices {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
+    
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
       Fluttertoast.showToast(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:boton_panico/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import '../services/ingreso_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -154,30 +155,55 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         blurRadius: 10,
                       )
                     ],
-                    onCompleted: (v) {
+                    onCompleted: (v) async {
                       formKey.currentState!.validate();
                       // conditions for validating
                       debugPrint(currentText);
                       debugPrint("${widget.username}");
 
-                      ingresoServices.otp(currentText, "${widget.username}");
+                      String res = await ingresoServices.otp(currentText, "${widget.username}");
+                      print(res);
 
-                      // if (currentText.length != 6) {
-                      //   errorController!.add(ErrorAnimationType
-                      //       .shake); // Triggering error shake animation
-                      //   setState(() => hasError = true);
-                      // } else {
-                      //   setState(
-                      //     () {
-                      //       hasError = false;
-                      //       ingresoServices.otp(currentText, "$widget.username");
-                      //     },
-                      //   );
-                      // }
+                      if (res == "badCode") {
+                        errorController!.add(ErrorAnimationType
+                            .shake); // Triggering error shake animation
+                        setState(() => hasError = true);
+                      } else if (res == "confirm") {
+                        setState(() {
+                            hasError = false;
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+                              builder: (BuildContext context){
+                                return const LoginPage();
+                                },
+                              ),  (Route<dynamic> route) => false,
+                            );
+                            Fluttertoast.showToast(
+                              msg: "Registro exitoso",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black87,
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                            );
+                          },
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: "Problemas del servidor",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black87,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                        );
+                      }
                     },
                     onChanged: (value) {
                       debugPrint(value);
                       setState(() {
+                        hasError = false;
                         currentText = value;
                       });
                     },
@@ -195,22 +221,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: TextButton(
-                      child: const Text(
-                        "Reenviar",
-                        style: TextStyle(
-                          color: Color.fromRGBO(255, 192, 0, 10),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          textEditingController.text = "123456";
-                        });
-                      },
-                    )
-                  ),
                   Flexible(
                     child: TextButton(
                       child: const Text(
