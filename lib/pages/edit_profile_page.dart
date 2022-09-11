@@ -11,13 +11,6 @@ class EditProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
-        title: const Text(
-            "Configuración",
-            style: TextStyle(
-              color: Color.fromRGBO(255, 192, 0, 10),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -34,11 +27,11 @@ class EditProfilePage extends StatelessWidget {
         ),
 
         backgroundColor: Colors.white,
-        shadowColor: const Color.fromRGBO(255, 192, 0, 10),
+        elevation: 0,
         //shadowColor: const Color.fromRGBO(255, 192, 0, 10),
       ),
 
-      body: const EditProfileWidget(),
+      body: EditProfileWidget(),
     );
   }
 }
