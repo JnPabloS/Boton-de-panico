@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'package:boton_panico/widgets/sizedboxw_widget.dart';
-import 'package:boton_panico/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import '../services/ingreso_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -75,9 +73,9 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
       body: GestureDetector(
         onTap: () {},
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
+          height : MediaQuery.of(context).size.height,
+          width  : MediaQuery.of(context).size.width,
+          child  : Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(

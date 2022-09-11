@@ -8,9 +8,17 @@ import 'package:boton_panico/pages/otp_page.dart';
 import 'package:boton_panico/pages/perfil_page.dart';
 import 'package:boton_panico/pages/register_page.dart';
 import 'package:boton_panico/pages/select_emergency_page.dart';
+import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = PreferenciasUsuario();
+  await prefs.initPrefs();
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Roboto',
       ),
-      initialRoute: "buttonStart",
+      initialRoute: "login",
       routes: {
         "login"       : (context) =>  const LoginPage(),
         "register"    : (context) =>  const RegisterPage(),

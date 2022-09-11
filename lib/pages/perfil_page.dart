@@ -12,6 +12,13 @@ class PerfilPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
        appBar: AppBar(
+        // title: const Text(
+        //   "Perfil",
+        //   style: TextStyle(
+        //     color: Color.fromRGBO(255, 192, 0, 10),
+        //     fontWeight: FontWeight.bold,
+        //   ),
+        // ),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -26,7 +33,6 @@ class PerfilPage extends StatelessWidget {
             );
           },
         ),
-
         backgroundColor: Colors.white,
         elevation: 0,
         //shadowColor: const Color.fromRGBO(255, 192, 0, 10),

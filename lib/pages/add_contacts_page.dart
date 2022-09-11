@@ -17,13 +17,13 @@ class AddContactsPage extends StatelessWidget {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           shadowColor: const Color.fromRGBO(255, 192, 0, 10),
-          title: const Text(
-            "Editar perfil",
-            style: TextStyle(
-              color: Color.fromRGBO(255, 192, 0, 10),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          // title: const Text(
+          //   "Editar perfil",
+          //   style: TextStyle(
+          //     color: Color.fromRGBO(255, 192, 0, 10),
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
@@ -38,6 +38,7 @@ class AddContactsPage extends StatelessWidget {
               );
             },
         ),
+        elevation: 0,
       ),
     
       body: AddContactsWidget(),

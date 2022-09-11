@@ -1,4 +1,5 @@
 import 'package:boton_panico/services/ingreso_services.dart';
+import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:boton_panico/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,14 @@ class AddContactsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final ingresoServices = IngresoServices();
-    
+    final prefs = PreferenciasUsuario();
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           
-          const SizedBoxWidget(heightSized: 50),
+          const SizedBoxWidget(heightSized: 30),
 
           const Text("Añadir contacto", 
           style: TextStyle(
@@ -31,7 +33,7 @@ class AddContactsWidget extends StatelessWidget {
             ),
           ),
 
-          const SizedBoxWidget(heightSized: 40),
+          const SizedBoxWidget(heightSized: 30),
 
           TextFieldWidget(label: "Nombre",      controllerText: nameController),
           TextFieldWidget(label: "Apellido" ,   controllerText: lastNameController),
@@ -46,9 +48,7 @@ class AddContactsWidget extends StatelessWidget {
             child: ElevatedButton(
               
               onPressed: ()  {
-                print("preess");
-                ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, "julian");
-
+                ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.token);
               }, 
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromRGBO(255, 192, 0, 10),
