@@ -1,22 +1,23 @@
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:boton_panico/widgets/textField_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../pages/button_start_page.dart';
 import '../services/ingreso_services.dart';
 import '../user_preferences/user_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginWidget extends StatelessWidget {
   LoginWidget({super.key});
 
   final TextEditingController userController = TextEditingController();
   final TextEditingController passController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
 
     final prefs = PreferenciasUsuario();
     print("PRIMERO: ${prefs.token}");
-    final ingresoServices = IngresoServices();
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -67,25 +68,8 @@ class LoginWidget extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromRGBO(255, 192, 0, 10),
                     ),
-                    onPressed: () async {
-
-                      if (userController.text != "" && passController.text != "") {
-                        ingresoServices.verifyUser(userController.text);
-                      } 
-
-                      bool confirmLogin = await ingresoServices.login(userController.text, passController.text);
-
-                      if (confirmLogin) {
-                        //Navigator.popAndPushNamed(context, 'buttonStart');
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
-                          builder: (BuildContext context){
-                            return const ButtonStartPage();
-                            },
-                          ),  (Route<dynamic> route) => false,
-                        );
-                      }
-                      
-                     
+                    onPressed: ()  {
+                      _tryLogin(context);
                     }, 
                     child: const Text(
                       "Iniciar sesión",
@@ -123,5 +107,45 @@ class LoginWidget extends StatelessWidget {
         ),
       )
     );
+  }
+  
+  Future<void> _tryLogin(BuildContext context) async {
+
+    final ingresoServices = IngresoServices();
+    String textError = "";
+    
+    if (userController.text != "" && passController.text != "") {
+      if(await ingresoServices.verifyUser(userController.text) == 1) {
+        Map<String, dynamic> res  = await ingresoServices.login(userController.text, passController.text);
+
+        if ( res["error"] == null) {
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+            builder: (BuildContext context){
+              return const ButtonStartPage();
+              },
+            ),  (Route<dynamic> route) => false,
+          );
+        } else {
+          if(res["error_description"] == "Bad credentials") {
+            textError = "Contraseña incorrecta";
+          }
+        }
+      } else if (await ingresoServices.verifyUser(passController.text) == 2){
+        textError = "El usuario no existe";
+      } else {
+        textError = "Problemas con el servidor";
+      }
+    } else {
+      textError = "Algún campo está vacío";
+    }
+    Fluttertoast.showToast(
+        msg: textError,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
   }
 }

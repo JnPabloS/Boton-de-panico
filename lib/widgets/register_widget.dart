@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:boton_panico/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import '../services/ingreso_services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterWidget extends StatelessWidget {
   RegisterWidget({super.key});
@@ -15,8 +18,6 @@ class RegisterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final ingresoServices = IngresoServices();
 
     return SafeArea(                   
       child: SingleChildScrollView(
@@ -51,34 +52,7 @@ class RegisterWidget extends StatelessWidget {
                       primary: const Color.fromRGBO(255, 192, 0, 10),
                     ),
                     onPressed: () {
-
-                      if (_validatePassword(passController.text, repPassController.text)) {
-                        ingresoServices.register(
-                        userController.text, 
-                        emailController.text,
-                        passController.text);
-                        Navigator.pushNamed(
-                          context, 
-                          "otp",
-                          arguments: [
-                            emailController.text,
-                            userController.text
-                          ]
-                        );
-                        
-
-                      } else {
-                        Fluttertoast.showToast(
-                          msg: "Las constraseñas no coinciden",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black87,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                        );
-                      }
-                      
+                      _tryRegister(context);                      
                     }, 
                     child: const Text(
                       "Registrarme",
@@ -122,5 +96,76 @@ class RegisterWidget extends StatelessWidget {
       return false;
     }
   }
+  
+  Future<void> _tryRegister(BuildContext context) async {
 
+    final ingresoServices = IngresoServices();
+    late Map<String, dynamic> decodeData;
+    String textError = "";
+    late http.StreamedResponse resp;
+
+    if (_validatePassword(passController.text, repPassController.text)) {
+
+      if(await ingresoServices.verifyUser(userController.text) == 1) {
+         textError = "El usuario ya existe";
+      } else if (await ingresoServices.verifyUser(userController.text) == 3){
+        Fluttertoast.showToast(
+        msg: "Problemas con el servidor",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+        fontSize: 16.0
+        );
+      } else {
+        resp = await ingresoServices.register(
+        userController.text, 
+        emailController.text,
+        passController.text); 
+
+        try {
+          decodeData = json.decode(await resp.stream.bytesToString());
+          textError = decodeData["errors"][0]["defaultMessage"];
+        } catch (e) {
+          print(e);
+        }
+
+        print("AAAAAAAAAA: ${resp.statusCode}");
+
+        if (resp.statusCode == 201) {
+          Navigator.pushNamed(
+            context, 
+            "otp",
+            arguments: [
+              emailController.text,
+              userController.text
+            ]
+          );
+          textError = "Valida tu correo";
+        } else if (resp.statusCode == 409) {
+          textError = decodeData["message"];
+        }
+      }
+      Fluttertoast.showToast(
+        msg: textError,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "Las constraseñas no coinciden",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black87,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+    }
+  }
 }
