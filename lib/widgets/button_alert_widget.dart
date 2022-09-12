@@ -1,24 +1,34 @@
+import 'dart:async';
+
 import 'package:boton_panico/pages/button_start_page.dart';
 import 'package:boton_panico/pages/select_emergency_page.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart';
 
-class ButtonAlertWidget extends StatelessWidget {
+class ButtonAlertWidget extends StatefulWidget {
   const ButtonAlertWidget({super.key});
 
   @override
+  State<ButtonAlertWidget> createState() => _ButtonAlertWidgetState();
+}
+
+class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
+  @override
   Widget build(BuildContext context) {
+    
+    _getLocation();
 
     final args =  (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     final String tipo = args['tipo'];
     final String imagen = _imagen(tipo);
-    print(tipo);
     
-
     return Container(
       alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
 
           const Text(
@@ -111,9 +121,48 @@ class ButtonAlertWidget extends StatelessWidget {
             ),
           ),
 
+          const SizedBoxWidget(heightSized: 75),
+
+          const Text(
+            "*Presiona el botón central para finalizar tu emergencia",
+            style: TextStyle(
+              color: Colors.black45
+            ),
+
+          ),
+
+          const SizedBoxWidget(heightSized: 10),
         ],
-      ),
+      ),    
     );
+  }
+  
+  Future<void> _getLocation() async {
+    
+    Location location = Location();
+    LocationData locationData;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    locationData = await location.getLocation();
+    
   }
 }
 

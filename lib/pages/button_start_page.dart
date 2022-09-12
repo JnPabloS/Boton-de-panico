@@ -1,4 +1,5 @@
 import 'package:boton_panico/pages/login_page.dart';
+import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:boton_panico/widgets/button_start_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,9 @@ class ButtonStartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final prefs = PreferenciasUsuario();
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -47,6 +51,7 @@ class ButtonStartPage extends StatelessWidget {
                 }else if(value == 1){
                   Navigator.pushNamed(context, "config");
                 }else if(value == 2){
+                  prefs.token = "";
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
                     builder: (BuildContext context){
                       return const LoginPage();

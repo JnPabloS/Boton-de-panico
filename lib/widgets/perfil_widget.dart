@@ -18,7 +18,6 @@ class PerfilWidget extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if(snapshot.hasData){
           final data = snapshot.data!;
-          print(data['lastName']);
           return Column(
             children:  [
                 Expanded(
@@ -45,6 +44,101 @@ class PerfilWidget extends StatelessWidget {
 
 
   _buildContacts(List<dynamic> data, Map<String, dynamic> datos, BuildContext context){
+
+    if(data.isEmpty){
+      return Column(
+          children: [
+                  const Text(
+                "Información personal",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color.fromRGBO(255, 192, 0, 10),
+                  fontSize: 27,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBoxWidget(heightSized: 10),
+
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              margin: EdgeInsets.zero,
+              elevation: 0,
+              child: ListTile(
+                leading: Icon(
+                  Icons.person,
+                  size: MediaQuery.of(context).size.width*0.10,
+                  color: const Color.fromARGB(170, 107, 107, 107),
+                ),
+                title: const Text('Usuario'),
+                subtitle: Text(datos['username']),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              margin: EdgeInsets.zero,
+              elevation: 0,
+              child: ListTile(
+                leading: Icon(
+                  Icons.badge,
+                  size: MediaQuery.of(context).size.width*0.10,
+                  color: const Color.fromARGB(170, 107, 107, 107),
+                ),
+                title: const Text("Nombre y apellido"),
+                subtitle: _validateName(datos['name'], datos['lastName']),
+              ),
+            ),
+          ),
+
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              margin: EdgeInsets.zero,
+              elevation: 0,
+              child: ListTile(
+                leading: Icon(
+                  Icons.mail,
+                  size: MediaQuery.of(context).size.width*0.10,
+                  color: const Color.fromARGB(170, 107, 107, 107),
+                ),
+                title: const Text('Correo'),
+                subtitle:Text(datos['email']),
+              ),
+            ),
+          ),
+
+          const Divider(color: Color.fromRGBO(255, 192, 0, 10),),
+
+          const SizedBoxWidget(heightSized: 10),
+          
+          const Text(
+                "Contactos de emergencia",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color.fromRGBO(255, 192, 0, 10),
+                  fontSize: 27,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+          const SizedBoxWidget(heightSized: 10),
+
+          const Text(
+            'Aún no tienes contactos de emergencia \nAñade contactos de emergencia en "configuración"',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black38
+            ),
+          ),
+
+
+        ],
+      );
+    }
+
     return ListView.builder(
       itemCount: data.length,                    
       itemBuilder: (context, index) {
@@ -52,80 +146,80 @@ class PerfilWidget extends StatelessWidget {
         return Column(
           children: [
             const Text(
-                  "Información personal",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 192, 0, 10),
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                const SizedBoxWidget(heightSized: 10),
-        
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    size: MediaQuery.of(context).size.width*0.10,
-                    color: const Color.fromARGB(170, 107, 107, 107),
-                  ),
-                  title: const Text('Usuario'),
-                  subtitle: Text(datos['username']),
-                ),
+              "Información personal",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromRGBO(255, 192, 0, 10),
+                fontSize: 27,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.badge,
-                    size: MediaQuery.of(context).size.width*0.10,
-                    color: const Color.fromARGB(170, 107, 107, 107),
-                  ),
-                  title: const Text("Nombre y apellido"),
-                  subtitle: _validateName(datos['name'], datos['lastName']),
-                ),
-              ),
-            ),
-        
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.mail,
-                    size: MediaQuery.of(context).size.width*0.10,
-                    color: const Color.fromARGB(170, 107, 107, 107),
-                  ),
-                  title: const Text('Correo'),
-                  subtitle:Text(datos['email']),
-                ),
-              ),
-            ),
-            
-            const Divider(color: Color.fromRGBO(255, 192, 0, 10),),
-        
             const SizedBoxWidget(heightSized: 10),
-            const Text(
-                  "Contactos de emergencia",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color.fromRGBO(255, 192, 0, 10),
-                    fontSize: 27,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+
+        SizedBox(
+          width: double.infinity,
+          child: Card(
+            margin: EdgeInsets.zero,
+            elevation: 0,
+            child: ListTile(
+              leading: Icon(
+                Icons.person,
+                size: MediaQuery.of(context).size.width*0.10,
+                color: const Color.fromARGB(170, 107, 107, 107),
+              ),
+              title: const Text('Usuario'),
+              subtitle: Text(datos['username']),
+            ),
+          ),
+        ),
+
+        SizedBox(
+          width: double.infinity,
+          child: Card(
+            margin: EdgeInsets.zero,
+            elevation: 0,
+            child: ListTile(
+              leading: Icon(
+                Icons.badge,
+                size: MediaQuery.of(context).size.width*0.10,
+                color: const Color.fromARGB(170, 107, 107, 107),
+              ),
+              title: const Text("Nombre y apellido"),
+              subtitle: _validateName(datos['name'], datos['lastName']),
+            ),
+          ),
+        ),
+
+        SizedBox(
+          width: double.infinity,
+          child: Card(
+            margin: EdgeInsets.zero,
+            elevation: 0,
+            child: ListTile(
+              leading: Icon(
+                Icons.mail,
+                size: MediaQuery.of(context).size.width*0.10,
+                color: const Color.fromARGB(170, 107, 107, 107),
+              ),
+              title: const Text('Correo'),
+              subtitle:Text(datos['email']),
+            ),
+          ),
+        ),
+
+        const Divider(color: Color.fromRGBO(255, 192, 0, 10),),
+
+        const SizedBoxWidget(heightSized: 10),
+        const Text(
+              "Contactos de emergencia",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromRGBO(255, 192, 0, 10),
+                fontSize: 27,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             _cardWord(data[index], context),
           ],
         );
@@ -164,4 +258,6 @@ class PerfilWidget extends StatelessWidget {
       return const Text('Edita en "configuración"');
     }
   }
+  
+
 }
