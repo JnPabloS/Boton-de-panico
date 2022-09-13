@@ -17,8 +17,6 @@ class ButtonAlertWidget extends StatefulWidget {
 class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
   @override
   Widget build(BuildContext context) {
-    
-    _getLocation();
 
     final args =  (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     final String tipo = args['tipo'];
@@ -137,33 +135,6 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
     );
   }
   
-  Future<void> _getLocation() async {
-    
-    Location location = Location();
-    LocationData locationData;
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-    
-
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
-
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    locationData = await location.getLocation();
-    
-  }
 }
 
 _color(String colorButton) {

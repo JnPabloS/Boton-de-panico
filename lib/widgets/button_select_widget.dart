@@ -19,9 +19,11 @@ import 'package:flutter/material.dart';
 // }
 
 class ButtonSelectWidget extends StatelessWidget {
-  const ButtonSelectWidget({super.key, required this.tipo});
+  const ButtonSelectWidget({super.key, required this.tipo, required this.latitud, required this.longitud});
   
   final String tipo;
+  final String latitud;
+  final String longitud;
   
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,8 @@ class ButtonSelectWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               print(tipo);
+              print(latitud);
+              print(longitud);
               Navigator.pushNamed(context, "buttonAlert", arguments: {'tipo' : tipo});
     
             },
