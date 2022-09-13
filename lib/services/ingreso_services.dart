@@ -174,8 +174,8 @@ class IngresoServices {
   }
 
   Future<int> verifyUser(String user) async {
+    print(user);
     var headers = {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJqdWxpYW5vIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImF0aSI6ImJiNDExMjM3LWE2YmUtNGJiNS1iMjE0LWNkMmJmMzhmZjEwZSIsImV4cCI6MTY2NTUyMDk3NCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImp0aSI6ImJjMjE3N2RiLTgyYTMtNDY3OS1hODZhLWFiYjM4ODk1MDgwMyIsImNsaWVudF9pZCI6ImZsdXR0ZXItcmV0byJ9.4Hr-8oYGGRz4qjtmmgR1Yn6SzwAkbr8TugPwjMFOeuw',
       'Cookie': 'color=rojo'
     };
     var request = http.MultipartRequest('GET', Uri.parse('$ip/reto/usuarios/usuarios/preguntar/usuarioExiste'));

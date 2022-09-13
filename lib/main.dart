@@ -38,11 +38,11 @@ class MyApp extends StatelessWidget {
         "buttonStart" : (context) =>  const ButtonStartPage(),
         "buttonSelect": (context) =>  const SelectEmergencyPage(),
         "buttonAlert" : (context) =>  const ButtonAlertPage(),
-        "addContacts" : (context) => const AddContactsPage(),
-        "perfil"      : (context) => const PerfilPage(),
-        "config"      : (context) => const ConfigurationPage(),
-        "editProfile" : (context) => const EditProfilePage(),
-        "otp"         : (context) => const OTPPage()
+        "addContacts" : (context) =>  const AddContactsPage(),
+        "perfil"      : (context) =>  const PerfilPage(),
+        "config"      : (context) =>  const ConfigurationPage(),
+        "editProfile" : (context) =>  const EditProfilePage(),
+        "otp"         : (context) =>  const OTPPage()
       },
     );
   }

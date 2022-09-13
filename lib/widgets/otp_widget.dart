@@ -14,8 +14,8 @@ class OTPWidget extends StatelessWidget {
     final List<String> args = ModalRoute.of(context)?.settings.arguments as List<String>;
 
     return PinCodeVerificationScreen(
-      emailAddr: args[0],
-      username: args[1]
+      emailAddr : args[0],
+      username  : args[1]
     );
   }
 }
