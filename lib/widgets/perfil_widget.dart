@@ -14,10 +14,11 @@ class PerfilWidget extends StatelessWidget {
     final ingresoServices = IngresoServices();
     
     return FutureBuilder(
-      future: ingresoServices.seeProfile(prefs.token, prefs.username),
+      future: ingresoServices.seeProfile(prefs.refreshToken, prefs.username),
       builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-        if(snapshot.hasData){
+        if(snapshot.hasData && snapshot.data!["error"] == null){
           final data = snapshot.data!;
+          print(data);
           return Column(
             children:  [
                 Expanded(

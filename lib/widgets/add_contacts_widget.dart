@@ -47,9 +47,10 @@ class AddContactsWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width*0.55,
             child: ElevatedButton(
               
-              onPressed: ()  {
-                ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.refreshToken);
-                //_clearAll(nameController, lastNameController, emailController, cellController);
+              onPressed: ()  async {
+                if (await ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.refreshToken)) {
+                  _clearAll(nameController, lastNameController, emailController, cellController);
+                }
               }, 
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromRGBO(255, 192, 0, 10),
