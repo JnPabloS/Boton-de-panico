@@ -99,12 +99,7 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
             child: ElevatedButton(
               
               onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
-                    builder: (BuildContext context){
-                      return const SelectEmergencyPage();
-                    },
-                  ),  (Route<dynamic> route) => false
-                );
+                Navigator.pop(context);
               }, 
               style: ElevatedButton.styleFrom(
                 primary: Colors.black,

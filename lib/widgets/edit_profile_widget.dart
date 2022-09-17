@@ -1,3 +1,4 @@
+import 'package:boton_panico/pages/button_start_page.dart';
 import 'package:boton_panico/services/ingreso_services.dart';
 import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
@@ -50,9 +51,16 @@ class EditProfileWidget extends StatelessWidget {
                   width: MediaQuery.of(context).size.width*0.55,
                   child: ElevatedButton(
                     
-                    onPressed: ()  {
-                      ingresoServices.editProfile(prefs.username, nameController.text, lastNameController.text, prefs.token);
+                    onPressed: ()  async {
                       prefs.username = userController.text;
+                      if(await ingresoServices.editProfile(prefs.username, nameController.text, lastNameController.text, prefs.token)) {
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+                            builder: (BuildContext context){
+                              return const ButtonStartPage();
+                            },
+                          ),  (Route<dynamic> route) => false
+                        );
+                      }
                     }, 
                     style: ElevatedButton.styleFrom(
                       primary: const Color.fromRGBO(255, 192, 0, 10),

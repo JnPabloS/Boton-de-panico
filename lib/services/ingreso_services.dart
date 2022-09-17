@@ -78,7 +78,7 @@ class IngresoServices {
 
     Future addContacts(String name, String lastName, String email, String cell, String user, String token) async {
       var headers = {
-        'Authorization' : 'Bearer $token',
+        'Authorization' : 'Bearer ${prefs.refreshToken}',
         'Content-Type'  : 'application/json'
       };
 
@@ -92,9 +92,9 @@ class IngresoServices {
       request.headers.addAll(headers);
       try {
       http.StreamedResponse response = await request.send();
+      print(await response.stream.bytesToString());
       print("${response.statusCode}");
         if (response.statusCode == 201) {
-          print(await response.stream.bytesToString());
           Fluttertoast.showToast(
             msg: "Contacto creado correctamente",
             toastLength: Toast.LENGTH_SHORT,
@@ -130,8 +130,8 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
       );
-      return false;
     }
+    return false;
   }
 
   Future<Map<String, dynamic>> seeProfile(String token, String user) async {
@@ -204,10 +204,10 @@ class IngresoServices {
     return 3;
   }
 
-  Future editProfile(String user, String name, String lastName, String token) async { 
+  Future<bool> editProfile(String user, String name, String lastName, String token) async { 
  
     var headers = {
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer ${prefs.refreshToken}',
       'Content-Type' : 'application/json',
       'Cookie': 'color=rojo'
     };
@@ -233,6 +233,7 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
         );
+        return true;
     }
     else {
       print(response.reasonPhrase);
@@ -246,5 +247,6 @@ class IngresoServices {
           fontSize: 16.0
         );
     }
+    return false;
   }
 }
