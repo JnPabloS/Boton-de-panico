@@ -103,7 +103,8 @@ class IngresoServices {
             backgroundColor: Colors.black87,
             textColor: Colors.white,
             fontSize: 16.0
-        );
+          );
+          return true;
         }
 
        else {
@@ -129,7 +130,7 @@ class IngresoServices {
           textColor: Colors.white,
           fontSize: 16.0
       );
-      //return false;
+      return false;
     }
   }
 
@@ -147,6 +148,8 @@ class IngresoServices {
       http.StreamedResponse response = await request.send();
       final Map<String, dynamic> decodeData = await json.decode(await response.stream.bytesToString());
 
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         prefs.name     = decodeData['name'];
         prefs.lastName = decodeData['lastName'];
@@ -154,8 +157,9 @@ class IngresoServices {
         return decodeData;
       }
       else {
+        final Map<String, dynamic> errorMap = {"error": "Problema de servidor"};
         print(response.reasonPhrase);
-        return decodeData;
+        return errorMap;
       }
     } catch (e) {
       final Map<String, dynamic> errorMap = {"error": "Problema de servidor"};

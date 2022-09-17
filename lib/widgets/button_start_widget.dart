@@ -33,7 +33,6 @@ class ButtonStartWidget extends StatelessWidget {
                   shadowColor: Colors.red.shade400, 
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(200),
-                      
                     ),
                     padding: const EdgeInsets.all(0.0),             // Elimina el borde interior
                 ),

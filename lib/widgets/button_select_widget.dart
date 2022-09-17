@@ -1,5 +1,8 @@
+import 'package:boton_panico/services/eventos_services.dart';
+import 'package:boton_panico/services/ingreso_services.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:flutter/material.dart';
+import '../user_preferences/user_preferences.dart';
 
 
 // class SizeConfig {
@@ -19,12 +22,17 @@ import 'package:flutter/material.dart';
 // }
 
 class ButtonSelectWidget extends StatelessWidget {
-  const ButtonSelectWidget({super.key, required this.tipo});
+  const ButtonSelectWidget({super.key, required this.tipo, required this.latitud, required this.longitud});
   
   final String tipo;
+  final String latitud;
+  final String longitud;
   
   @override
   Widget build(BuildContext context) {
+
+    final prefs = PreferenciasUsuario();
+    final eventosServices = EventosServices();
   
     final String imagen      = _imagen(tipo);
     final String labelButton = _label(tipo);
@@ -40,6 +48,9 @@ class ButtonSelectWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               print(tipo);
+              print(latitud);
+              print(longitud);
+              eventosServices.crearEvento(prefs.username, prefs.refreshToken  , latitud, longitud, tipo);
               Navigator.pushNamed(context, "buttonAlert", arguments: {'tipo' : tipo});
     
             },
