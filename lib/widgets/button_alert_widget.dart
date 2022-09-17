@@ -119,7 +119,7 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
             ),
           ),
 
-          const SizedBoxWidget(heightSized: 75),
+          SizedBoxWidget(heightSized: MediaQuery.of(context).size.height*0.17),
 
           const Text(
             "*Presiona el botón central para finalizar tu emergencia",
