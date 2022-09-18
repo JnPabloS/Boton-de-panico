@@ -136,11 +136,11 @@ class LoginWidget extends StatelessWidget {
           );
         } else {
           if(res["error_description"] == "Bad credentials") {
-            textError = "Credenciales incorrectas";
+            textError = "Usuario y/o contraseña inconrrectos";
           }
         }
       } else if (await ingresoServices.verifyUser(passController.text) == 2){
-        textError = "Credenciales incorrectas";
+        textError = "Usuario y/o contraseña inconrrectos";
       } else {
         textError = "Problemas con el servidor";
       }

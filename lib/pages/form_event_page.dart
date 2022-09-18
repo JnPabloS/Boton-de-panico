@@ -1,11 +1,9 @@
-import 'package:boton_panico/widgets/perfil_widget.dart';
+import 'package:boton_panico/pages/button_alert_page.dart';
+import 'package:boton_panico/widgets/form_event_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'button_start_page.dart';
-import 'login_page.dart';
-
-class PerfilPage extends StatelessWidget {
-  const PerfilPage({super.key});
+class FormEventPage extends StatelessWidget {
+  const FormEventPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +16,17 @@ class PerfilPage extends StatelessWidget {
             color: Color.fromRGBO(255, 192, 0, 10),
           ),
           onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
-                    builder: (BuildContext context){
-                      return const ButtonStartPage();
-                      },
-                    ),  (Route<dynamic> route) => false,
-            );
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Colors.white,
         elevation: 0,
         //shadowColor: const Color.fromRGBO(255, 192, 0, 10),
       ),
-      body: const PerfilWidget()
+
+      body : const FormEventWidget()
     );
   }
 }
+
+// Navigator.pushNamed(context, "formEvent", arguments: {'tipo' : tipo, 'lat' : args['lat'], 'lon' : args['lon']});

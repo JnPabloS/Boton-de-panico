@@ -76,8 +76,7 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
             child: ElevatedButton(
               
               onPressed: () {
-                print("SELECT1");
-                Navigator.pushNamed(context, "form", arguments: {'tipo' : tipo, 'lat' : args['lat'], 'lon' : args['lon']});
+                Navigator.pushNamed(context, "formEvent", arguments: {'tipo' : tipo, 'lat' : args['lat'], 'lon' : args['lon']});
 
               }, 
               style: ElevatedButton.styleFrom(
@@ -116,7 +115,7 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
             ),
           ),
 
-          SizedBoxWidget(heightSized: MediaQuery.of(context).size.height*0.17),
+          SizedBoxWidget(heightSized: MediaQuery.of(context).size.height*0.12),
 
           const Text(
             "*Presiona el botón central para finalizar tu emergencia",
