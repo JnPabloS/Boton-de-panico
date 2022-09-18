@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../user_preferences/user_preferences.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText, this.isEmail = false, this.isPhone = false, this.isEditName = false, this.isEditUserName = false, this.isEditLastName = false});
+  const TextFieldWidget({super.key, required this.label, this.obscure = false, required this.controllerText, this.isEmail = false, this.isPhone = false, this.isEditName = false, this.isEditUserName = false, this.isEditLastName = false, this.isMultiLine = false});
 
   final String label;
   final bool obscure;
@@ -12,6 +12,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool isEditName;
   final bool isEditUserName;
   final bool isEditLastName;
+  final bool isMultiLine;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,8 @@ class TextFieldWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: TextField(
         enabled: isEditUserName ? false : true,
-        keyboardType: _validateType(isEmail, isPhone)    ,   //_validateType(isEmail),
+        keyboardType: _validateType(isEmail, isPhone, isMultiLine),
+        maxLines: isMultiLine ? null : 1,
         cursorColor: Colors.black45,
         controller: controllerText,
         style: TextStyle(
@@ -56,11 +58,13 @@ class TextFieldWidget extends StatelessWidget {
 }
 
 
-_validateType(bool isEmail, bool isPhone){
+_validateType(bool isEmail, bool isPhone, bool isMultiLine){
   if (isEmail){
     return TextInputType.emailAddress;
   } else if (isPhone) {
     return TextInputType.phone;
+  } else if (isMultiLine) {
+    return TextInputType.multiline;
   } else {
     return null;
   }

@@ -56,13 +56,13 @@ class ButtonSelectWidget extends StatelessWidget {
             },
     
             style: ElevatedButton.styleFrom( 
-                    primary: _color(tipo),
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),   
-                      ),
-                    padding: const EdgeInsets.all(0.0),             
-                  ), 
+              primary: _color(tipo),
+              elevation: 10,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),   
+                ),
+              padding: const EdgeInsets.all(0.0),             
+            ), 
     
             child: Image.asset(
               "assets/$imagen.png",

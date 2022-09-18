@@ -3,6 +3,7 @@ import 'package:boton_panico/pages/button_alert_page.dart';
 import 'package:boton_panico/pages/button_start_page.dart';
 import 'package:boton_panico/pages/configuration_page.dart';
 import 'package:boton_panico/pages/edit_profile_page.dart';
+import 'package:boton_panico/pages/form_event_page.dart';
 import 'package:boton_panico/pages/login_page.dart';
 import 'package:boton_panico/pages/otp_page.dart';
 import 'package:boton_panico/pages/perfil_page.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         "perfil"      : (context) =>  const PerfilPage(),
         "config"      : (context) =>  const ConfigurationPage(),
         "editProfile" : (context) =>  const EditProfilePage(),
+        "formEvent"   : (context) =>  const FormEventPage(),
         "otp"         : (context) =>  const OTPPage()
       },
     );
