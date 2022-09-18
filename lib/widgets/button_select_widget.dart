@@ -50,8 +50,8 @@ class ButtonSelectWidget extends StatelessWidget {
               print(tipo);
               print(latitud);
               print(longitud);
-              eventosServices.crearEvento(prefs.username, prefs.refreshToken  , latitud, longitud, tipo);
-              Navigator.pushNamed(context, "buttonAlert", arguments: {'tipo' : tipo});
+              eventosServices.crearEvento(latitud, longitud, tipo, "");
+              Navigator.pushNamed(context, "buttonAlert", arguments: {'tipo' : tipo, 'lat' : latitud, 'lon' : longitud});
     
             },
     

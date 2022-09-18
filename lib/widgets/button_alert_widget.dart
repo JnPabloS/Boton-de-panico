@@ -77,6 +77,8 @@ class _ButtonAlertWidgetState extends State<ButtonAlertWidget> {
               
               onPressed: () {
                 print("SELECT1");
+                Navigator.pushNamed(context, "form", arguments: {'tipo' : tipo, 'lat' : args['lat'], 'lon' : args['lon']});
+
               }, 
               style: ElevatedButton.styleFrom(
                 primary: const Color.fromRGBO(255, 192, 0, 10),

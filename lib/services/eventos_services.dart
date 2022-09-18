@@ -1,24 +1,26 @@
+import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class EventosServices {
 
   final ip = "http://sistemic.udea.edu.co:4000";
+  final prefs = PreferenciasUsuario();
 
-  Future crearEvento(String user, String token, String lat, String lon, String descripcion) async {
+  Future crearEvento(String lat, String lon, String descripcion, String comentario) async {
     var headers = {
-    'Authorization': 'Bearer $token',
+    'Authorization': 'Bearer ${prefs.refreshToken}',
     'Content-Type': 'application/json',
     'Cookie': 'color=rojo'
     };
-    var request = http.Request('POST', Uri.parse('$ip/reto/events/eventos/crear/usuario/$user'));
+    var request = http.Request('POST', Uri.parse('$ip/reto/events/eventos/crear/usuario/${prefs.username}'));
     request.body = json.encode({
       "location": [
         lat,
         lon
       ],
       "eventDescription": descripcion,
-      "comment": ""
+      "comment": comentario
     });
     request.headers.addAll(headers);
 
