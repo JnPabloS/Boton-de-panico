@@ -49,8 +49,6 @@ dev_dependencies:
 
   permission_handler: ^9.2.0
 
-  
-
 flutter_native_splash:
   color: "#ffffff"
   image: assets/logo2.png

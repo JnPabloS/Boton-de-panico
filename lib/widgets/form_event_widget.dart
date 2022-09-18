@@ -24,6 +24,7 @@ class FormEventWidget extends StatefulWidget {
 
 class _FormEventWidgetState extends State<FormEventWidget> {
 
+  final TextEditingController desController    = TextEditingController();
   File? image;
   final ImagePicker _imagePicker = ImagePicker();
   Future selectImage(option) async {
@@ -110,7 +111,6 @@ class _FormEventWidgetState extends State<FormEventWidget> {
 
     final args          =  (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map;
     final String imagen = _imagen(args["tipo"]);
-    final TextEditingController desController    = TextEditingController();
     final eventosServices = EventosServices();
     
     if (mounted) {
@@ -173,7 +173,30 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                   
                   const SizedBoxWidget(heightSized: 10),
             
-                  TextFieldWidget(label: "Descripción del evento", controllerText: desController),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: TextField(
+                      enabled: true,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      cursorColor: Colors.black45,
+                      controller: desController,
+                      style: TextStyle(
+                        color:Colors.black87,
+                      ),
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        focusedBorder: const OutlineInputBorder(          
+                          borderSide: BorderSide(color: Color.fromRGBO(255, 192, 0, 10))
+                        ),
+                        labelText: "Descripción del evento",
+                        labelStyle: const TextStyle(
+                          color: Colors.black45,
+                        ),
+                      ),
+                    ),
+                  ),
 
                   const SizedBoxWidget(heightSized: 10),
                 ],
@@ -309,7 +332,7 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                         eventosServices.crearEvento(args['lat'], args['lon'], args['tipo'], desController.
                         text);
                         print(recordFilePath);
-                        print(image);
+                        print(image!.path);
                         if(image == null || recordFilePath == null) {
                           if(image == null && recordFilePath != null){
                             eventosServices.attachFiles("", recordFilePath!);
@@ -387,7 +410,7 @@ class _FormEventWidgetState extends State<FormEventWidget> {
       statusText = "No microphone permission";
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('No microphone permission'),
+          content: Text('No tienes permiso de micrófono'),
         ),
       );
     }
