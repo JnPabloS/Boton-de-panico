@@ -55,5 +55,4 @@ class PreferenciasUsuario {
   String get refreshToken{
     return _prefs.getString('refreshToken') ?? "";
   }
-
 }

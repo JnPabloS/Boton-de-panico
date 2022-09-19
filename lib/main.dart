@@ -1,6 +1,8 @@
 import 'package:boton_panico/pages/add_contacts_page.dart';
 import 'package:boton_panico/pages/button_alert_page.dart';
 import 'package:boton_panico/pages/button_start_page.dart';
+import 'package:boton_panico/pages/change_pass_page.dart';
+import 'package:boton_panico/pages/change_passf_page.dart';
 import 'package:boton_panico/pages/configuration_page.dart';
 import 'package:boton_panico/pages/edit_profile_page.dart';
 import 'package:boton_panico/pages/form_event_page.dart';
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
         "config"      : (context) =>  const ConfigurationPage(),
         "editProfile" : (context) =>  const EditProfilePage(),
         "formEvent"   : (context) =>  const FormEventPage(),
+        "changePass"  : (context)  => const ChangePassPage(),
+        "changePassf" : (context) =>  const ChangePassFPage(),
         "otp"         : (context) =>  const OTPPage()
       },
     );

@@ -38,7 +38,7 @@ class ConfigurationWidget extends StatelessWidget {
           ),
 
         SizedBox(
-          height: MediaQuery.of(context).size.height*0.09,
+          height: MediaQuery.of(context).size.height*0.08,
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton.icon(
             onPressed: () {
@@ -65,7 +65,33 @@ class ConfigurationWidget extends StatelessWidget {
             ),
           ),
 
-          
+          SizedBox(
+          height: MediaQuery.of(context).size.height*0.07,
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, "changePass");
+            },
+            icon: const Icon(
+              Icons.lock_open,
+              color: Color.fromRGBO(255, 192, 0, 10),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+              elevation: 0,
+            ),
+            label: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                " Cambiar contraseña",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            ),
+          ),
         ],
       );
     }

@@ -157,7 +157,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     ],
                     onCompleted: (v) async {
                       formKey.currentState!.validate();
-                      // conditions for validating
                       debugPrint(currentText);
                       debugPrint("${widget.username}");
 
