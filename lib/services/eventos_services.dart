@@ -1,4 +1,6 @@
 import 'package:boton_panico/user_preferences/user_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -7,7 +9,7 @@ class EventosServices {
   final ip = "http://sistemic.udea.edu.co:4000";
   final prefs = PreferenciasUsuario();
 
-  Future crearEvento(String lat, String lon, String descripcion, String comentario) async {
+  Future<bool> crearEvento(String lat, String lon, String descripcion, String comentario) async {
     var headers = {
     'Authorization': 'Bearer ${prefs.refreshToken}',
     'Content-Type': 'application/json',
@@ -30,10 +32,21 @@ class EventosServices {
 
     if (response.statusCode == 201) {
       print(await response.stream.bytesToString());
+      
+      return true;
     }
     else {
       print(response.reasonPhrase);
-    }
+      Fluttertoast.showToast(
+          msg: "No fue posible generar el reporte",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0
+        );
+    } return false;
   }
 
   Future attachFiles(String image, String audio) async {
@@ -58,9 +71,6 @@ class EventosServices {
       request.files.add(await http.MultipartFile.fromPath('audios', audio));
     }
 
-    // request.files.add(await http.MultipartFile.fromPath('imagenes', image));
-    // request.files.add(await http.MultipartFile.fromPath('videos', audio));
-    // request.files.add(await http.MultipartFile.fromPath('audios', audio));
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
