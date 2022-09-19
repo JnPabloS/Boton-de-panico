@@ -3,6 +3,7 @@ import 'package:boton_panico/user_preferences/user_preferences.dart';
 import 'package:boton_panico/widgets/sizedboxw_widget.dart';
 import 'package:boton_panico/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../pages/button_start_page.dart';
 
 class AddContactsWidget extends StatelessWidget {
@@ -51,13 +52,25 @@ class AddContactsWidget extends StatelessWidget {
               child: ElevatedButton(
                 
                 onPressed: ()  async {
-                  if (await ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.refreshToken)) {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
-                        builder: (BuildContext context){
-                          return const ButtonStartPage();
-                        },
-                      ),  (Route<dynamic> route) => false
-                    );
+                  if (_validateFields(nameController.text, lastNameController.text, emailController.text, cellController.text)) {
+                    if (await ingresoServices.addContacts(nameController.text, lastNameController.text, emailController.text, cellController.text, prefs.username, prefs.refreshToken)) {
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute<void>(
+                          builder: (BuildContext context){
+                            return const ButtonStartPage();
+                          },
+                        ),  (Route<dynamic> route) => false
+                      );
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Algún campo está vacío",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black87,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                      );
                   }
                 }, 
                 style: ElevatedButton.styleFrom(
@@ -77,11 +90,11 @@ class AddContactsWidget extends StatelessWidget {
       ),
     );
   }
-
-  _clearAll(TextEditingController nameController,TextEditingController lastNameController,TextEditingController emailController,TextEditingController cellController) {
-    nameController.text = "";
-    lastNameController.text = "";
-    emailController.text = "";
-    cellController.text = "";
+  
+  bool _validateFields(String name, String lastname, String email, String phone) {
+    if (name.isEmpty || email.isEmpty || lastname.isEmpty || phone.isEmpty) {
+      return false;
+    }
+    return true;
   }
 }

@@ -92,7 +92,6 @@ class IngresoServices {
       request.headers.addAll(headers);
       try {
       http.StreamedResponse response = await request.send();
-      print(await response.stream.bytesToString());
       print("${response.statusCode}");
         if (response.statusCode == 201) {
           Fluttertoast.showToast(
@@ -105,6 +104,18 @@ class IngresoServices {
             fontSize: 16.0
           );
           return true;
+        } else if (response.statusCode == 400) {
+          Map<String, dynamic> decodeData = jsonDecode (await response.stream.bytesToString());
+          print(decodeData);
+          Fluttertoast.showToast(
+            msg: decodeData['errors'][0]['defaultMessage'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black87,
+            textColor: Colors.white,
+            fontSize: 16.0
+          );
         }
 
        else {
