@@ -24,6 +24,7 @@ class FormEventWidget extends StatefulWidget {
 
 class _FormEventWidgetState extends State<FormEventWidget> {
 
+  late bool boolButton = false;
   final TextEditingController desController    = TextEditingController();
   File? image;
   final ImagePicker _imagePicker = ImagePicker();
@@ -235,7 +236,9 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                       if (isRecording) {
                         stopRecord();
                       } else {
+                        boolButton = true;
                         startRecord();
+
                       }
                     },
                   ),
@@ -250,7 +253,7 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                           onPressed: () async {
                             if (isPlaying) {
                               await audioPlayer.pause();
-                            } else {
+                            } else if(boolButton) {
                               await audioPlayer.resume();
                             }
                           },
@@ -328,11 +331,8 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                   content: const Text('Atenderemos la emergencia lo más pronto posible.'),
                   actions: [
                     TextButton(
-                      onPressed: () {
-                        eventosServices.crearEvento(args['lat'], args['lon'], args['tipo'], desController.
-                        text);
-                        print(recordFilePath);
-                        print(image!.path);
+                      onPressed: () async {
+                        if (await eventosServices.crearEvento(args['lat'], args['lon'], args['tipo'], desController.text)) {
                         if(image == null || recordFilePath == null) {
                           if(image == null && recordFilePath != null){
                             eventosServices.attachFiles("", recordFilePath!);
@@ -350,6 +350,8 @@ class _FormEventWidgetState extends State<FormEventWidget> {
                             },
                           ),  (Route<dynamic> route) => false
                         );
+                        }
+                        
                       },
 
                       child: const Text(

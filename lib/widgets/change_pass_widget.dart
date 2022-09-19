@@ -54,10 +54,25 @@ class ChangePassWidget extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: ()  async {
                         final Map<String, dynamic> datos = await ingresoServices.seeProfile(prefs.refreshToken, prefs.username);
-                        if(await _verificarEmail(datos)){
-                          if(await ingresoServices.codChangePass()){
-                            Fluttertoast.showToast(
-                              msg: "Código enviado al correo ingresado",
+                        if(!emailController.text.isEmpty){
+                          if(await _verificarEmail(datos)){
+                            if(await ingresoServices.codChangePass()){
+                              Fluttertoast.showToast(
+                                msg: "Código enviado al correo ingresado",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black87,
+                                textColor: Colors.white,
+                                fontSize: 16.0
+                              );
+
+                              Navigator.pushNamed(context, "changePassf", arguments: {'email' : datos["email"]});
+
+                            } 
+                          } else {
+                              Fluttertoast.showToast(
+                              msg: "Correo inválido, verifica tu correo",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.BOTTOM,
                               timeInSecForIosWeb: 1,
@@ -65,13 +80,10 @@ class ChangePassWidget extends StatelessWidget {
                               textColor: Colors.white,
                               fontSize: 16.0
                             );
-
-                            Navigator.pushNamed(context, "changePassf", arguments: {'email' : datos["email"]});
-
-                          } 
+                          }
                         } else {
                           Fluttertoast.showToast(
-                            msg: "Correo inválido, verifica tu correo",
+                            msg: "Ingresa tu correo electrónico",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.BOTTOM,
                             timeInSecForIosWeb: 1,
